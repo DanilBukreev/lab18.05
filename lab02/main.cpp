@@ -2,71 +2,31 @@
 
 using namespace std;
 
-struct Node {
-    int a;
-    Node *next;
+struct Node{
+	int data;
+	Node* next;
 };
 
-void Making_List(int *array, Node **first, int argc) {
-    (*first) = new Node;
-
-    (*first)->a = *(array + 1);
-    (*first)->next = nullptr;
-    Node *curr = *first;
-
-    for (int i = 2; i < argc; i++)
-    {
-        curr->next = new Node;
-        curr = curr->next;
-        curr->a = *(array + i);
-        curr->next = nullptr;
-    }
-}
-
-void Reverse(struct Node **head) {
-    if ((*head) == nullptr)
-        return;
-    Node *curr, *next, *prev = nullptr;
-    curr = *head;
-    while(curr)
-    {
-        next = curr->next;
-        curr->next = prev;
-        prev = curr;
-        curr = next;
-    }
-    *head = prev;
-}
-void Print(Node *first) {
-    Node *print = first;
-    if (print == nullptr) {
-        cout << "Лист пуст." << endl;
-        cout << endl;
-    }
-    else {
-        do {
-            cout << print->a;
-            if (print->next)
-                cout << " -> ";
-            print = print->next;
-        } while (print);
-        cout << endl;
-    }
-}
-
 int main(int argc, char *argv[]) {
-    int *array = new int[argc-1];
+	Node *first = nullptr;
+	first = new Node{atoi(argv[1]), nullptr};
+	first -> next = new Node{atoi(argv[2]), nullptr};
+	first -> next -> next = new Node{atoi(argv[3]), nullptr};
+	first -> next -> next -> next = new Node{atoi(argv[4]), nullptr};
+	for (Node* current = first; current != nullptr; current = current->next)
+		cout << current->data << " ";
+	cout << endl;
 
-    for (int i = 1; i < argc; i++)
-        array[i] = atoi(argv[i]);
-
-    Node *first = nullptr;
-
-    if (argc == 1)
-        Node *first = nullptr;
-    else
-        Making_List(array, &first, argc);
-    Print(first);
-    Reverse(&first);
-    Print(first);
+	Node* current = first;
+	Node* next = nullptr;
+	Node* previous = nullptr;
+	while (current != nullptr){
+		next = current->next;
+		current->next = previous; 
+		previous = current; 
+		current = next; 
+	}
+	first = previous;
+	for (Node* current = first; current != nullptr; current = current->next)
+		cout << current->data << " ";
 }
